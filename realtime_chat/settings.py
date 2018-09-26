@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Created apps
+    'apps.authentication',
 
     # Installed apps
     'channels',
