@@ -1,7 +1,7 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 
-from apps.chat.models import Chat
+from apps.chat.models import Chat, Rooms
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -52,7 +52,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
         user_id = event['user_id']
         publisher_full_name = event['publisher_full_name']
 
-        chat_object = Chat.objects.create(user_id=self.user.id, text=message)
+        try:
+            room = Rooms.objects.get(name=self.room_name)
+        except Rooms.DoesNotExist:
+            return
+
+        chat_object = Chat.objects.create(user_id=self.user.id, text=message, room=room)
 
         created_at = chat_object.created_at.strftime('%H:%M:%S %Y/%m/%d')
 
