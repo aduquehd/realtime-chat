@@ -18,9 +18,12 @@ INSTALLED_APPS = [
 
     # Created apps
     'apps.authentication',
+    'apps.chat',
+    'apps.shared',
 
     # Installed apps
     'channels',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -80,6 +83,21 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+LOGIN_REDIRECT_URL = '/chat'
+
+# Django channels
+ASGI_APPLICATION = "realtime_chat.routing.application"
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+
+# Database setup
 if os.environ.get("ENVIRONMENT_NAME") in ("PRODUCTION",):
     SECRET_KEY = os.environ["REALTIME_CHAT_SECRET_KEY"]
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -115,5 +133,8 @@ else:
             'PORT': PORT,
             'USER': USER,
             'PASSWORD': PASSWORD,
+            'TEST': {
+                'NAME': "test_{}".format(NAME)
+            }
         }
     }

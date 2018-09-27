@@ -12,7 +12,6 @@ djangorestframework==3.8.2
 hyperlink==18.0.0
 idna==2.7
 incremental==17.5.0
-Markdown==3.0
 psycopg2==2.7.5
 PyHamcrest==1.9.0
 pytz==2018.5
