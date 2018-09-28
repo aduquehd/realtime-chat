@@ -101,7 +101,7 @@ CHANNEL_LAYERS = {
 # Database setup
 if os.environ.get("ENVIRONMENT_NAME") in ("PRODUCTION",):
     SECRET_KEY = os.environ["REALTIME_CHAT_SECRET_KEY"]
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
     REALTIME_CHAT_BOT = ""
 
     DEBUG = False
