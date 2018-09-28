@@ -1,5 +1,6 @@
 initActions();
-let currentSocket = null;
+let currentRealtimeChatSocket = null;
+let currentRealtimeChatBotSocket = null;
 
 let messagesList = new Vue({
     el: '#messages-list',
@@ -22,11 +23,20 @@ function initRoomsActions() {
         messagesList.items = [];
 
         let chatSocket = new WebSocket('ws://' + window.location.host + '/ws/chat/' + roomName + '/');
-        if (currentSocket) {
-            currentSocket.close();
+        let chatBotSocket = new WebSocket('ws://' + $('#realtime-chat-bot').val() + '/ws/chat/bot/' + roomName + '/');
+
+        if (currentRealtimeChatSocket) {
+            currentRealtimeChatSocket.close();
         }
-        currentSocket = chatSocket;
-        initChatSocketActions(chatSocket);
+
+        if (currentRealtimeChatBotSocket) {
+            currentRealtimeChatBotSocket.close();
+        }
+
+        currentRealtimeChatSocket = chatSocket;
+        currentRealtimeChatBotSocket = chatBotSocket;
+
+        initChatSocketActions(chatSocket, chatBotSocket);
 
         $(".chat_list").removeClass('active_chat');
         this.classList.add('active_chat');
@@ -67,5 +77,16 @@ $('#messages-list').bind("DOMSubtreeModified", function () {
         document.getElementById("messages-list").lastChild.scrollIntoView();
     }
     catch (e) {
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    if (!Notification) {
+        alert('Desktop notifications not available in your browser. Try Chromium.');
+        return;
+    }
+
+    if (Notification.permission !== "granted") {
+        Notification.requestPermission();
     }
 });

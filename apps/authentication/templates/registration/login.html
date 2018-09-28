@@ -22,6 +22,9 @@
 
                     <form class="form" method="post">
                         {% csrf_token %}
+                        {% if form.errors %}
+                            <h6>Usuario o contraseña inválidos</h6>
+                        {% endif %}
                         <div class="form-group">
                             <label for="username" class="text-white">Username:</label><br>
                             <input type="text" name="username" id="username" class="form-control">
