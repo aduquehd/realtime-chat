@@ -10,67 +10,36 @@
 
 {% block body %}
 
+    <h3 id="selected-room">Select a room to start chatting</h3>
+    <hr>
     <div class="messaging">
         <div class="inbox_msg">
             <div class="inbox_people">
 
+                <div class="headind_srch">
+                    <div class="recent_heading">
+                        <h4>Rooms</h4>
+                    </div>
+                </div>
+
                 <div class="inbox_chat">
 
-                    <div class="chat_list active_chat">
-                        <div class="chat_people">
-                            <div class="chat_img">
-                                <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
-                            </div>
-                            <div class="chat_ib">
-                                <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                <p>Test, which is a new approach to have all solutions
-                                    astrology under one roof.</p>
+                    {% for room in rooms %}
+
+                        <div class="chat_list" data-room-id="{{ room.id }}" data-room-name="{{ room.name }}">
+                            <div class="chat_people">
+                                <div class="chat_img">
+                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                                </div>
+
+                                <div class="chat_ib">
+                                    <h5>{{ room.name }} <span class="chat_date">Dec 25</span></h5>
+                                    <p>{{ room.description }}.</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="chat_list">
-                        <div class="chat_people">
-                            <div class="chat_img">
-                                <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
-                            </div>
-
-                            <div class="chat_ib">
-                                <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-
-                                <p>Test, which is a new approach to have all solutions
-                                    astrology under one roof.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat_list">
-                        <div class="chat_people">
-                            <div class="chat_img">
-                                <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
-                            </div>
-
-                            <div class="chat_ib">
-                                <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-
-                                <p>Test, which is a new approach to have all solutions
-                                    astrology under one roof.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat_list">
-                        <div class="chat_people">
-                            <div class="chat_img">
-                                <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
-                            </div>
-
-                            <div class="chat_ib">
-                                <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-
-                                <p>Test, which is a new approach to have all solutions
-                                    astrology under one roof.</p>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
 
                 </div>
             </div>
@@ -82,7 +51,7 @@
                         <div class="outgoing_msg" v-if="item.own">
                             <div class="sent_msg">
                                 <p>{{ item.message }}</p>
-                                <span class="time_date">{{ item.publisher_full_name }}</span>
+                                <span class="time_date">{{ item.publisher_full_name }} || {{ item.created_at }}</span>
                             </div>
                         </div>
 
@@ -93,7 +62,8 @@
                             <div class="received_msg">
                                 <div class="received_withd_msg">
                                     <p>{{ item.message }}</p>
-                                    <span class="time_date">{{ item.publisher_full_name }}</span></div>
+                                    <span class="time_date">{{ item.publisher_full_name }} || {{ item.created_at }}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -102,7 +72,7 @@
 
                 <div class="type_msg">
                     <div class="input_msg_write">
-                        <input type="text" id="message-text" class="write_msg" placeholder="Type a message"/>
+                        <input disabled="" type="text" id="message-text" class="write_msg" placeholder="Select a Room"/>
                         <button id="chat-message-submit" class="msg_send_btn" type="button">
                             <i class="fab fa-telegram-plane"></i>
                         </button>
@@ -117,14 +87,15 @@
     <input type="hidden" id="user-id" value="{{ request.user.id }}">
 
 
-    {{ request.user.username }} - {{ request.user.id }}
-
-
 {% endblock %}
 
 {% block scripts %}
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="{% static 'js/room.js' %}"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script src="{% static 'js/messages-send.js' %}?v=1.0.0"></script>
+    <script src="{% static 'js/web-socket.js' %}?v=1.0.0"></script>
+    <script src="{% static 'js/room.js' %}?v=1.0.0"></script>
 
 {% endblock %}

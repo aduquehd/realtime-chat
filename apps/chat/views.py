@@ -1,10 +1,14 @@
-import json
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from django.utils.safestring import mark_safe
+from django.http import JsonResponse
+
+from .models import Rooms, Chat
 
 
 @login_required
 def rooms(request):
-    return render(request, 'chat/room.html')
+    rooms = Rooms.objects.all()
+    context = {
+        'rooms': rooms
+    }
+    return render(request, 'chat/room.html', context)

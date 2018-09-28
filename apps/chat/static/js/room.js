@@ -1,84 +1,71 @@
 initActions();
+let currentSocket = null;
+
+let messagesList = new Vue({
+    el: '#messages-list',
+    data: {
+        items: []
+    },
+});
+
 
 function initActions() {
     initMessageInputTextActions();
-    initChatSocketActions("lobby");
-    initMessageListActions();
-
+    initRoomsActions();
 }
 
-function initMessageInputTextActions() {
-    document.querySelector('#message-text').focus();
-    document.querySelector('#message-text').onkeyup = function (e) {
-        if (e.keyCode === 13) {
-            document.querySelector('#chat-message-submit').click();
+function initRoomsActions() {
+    $('.chat_list').click(function () {
+        let roomId = $(this).data('room-id');
+        let roomName = $(this).data('room-name');
+
+        messagesList.items = [];
+
+        let chatSocket = new WebSocket('ws://' + window.location.host + '/ws/chat/' + roomName + '/');
+        if (currentSocket) {
+            currentSocket.close();
         }
-    };
+        currentSocket = chatSocket;
+        initChatSocketActions(chatSocket);
+
+        $(".chat_list").removeClass('active_chat');
+        this.classList.add('active_chat');
+
+        let messageTextDOM = $('#message-text');
+
+        messageTextDOM.removeAttr('disabled');
+        messageTextDOM.attr('placeholder', "Write a message");
+
+        updateRoomChats(roomId);
+    });
+}
+
+function updateRoomChats(roomId) {
+    let userId = document.getElementById('user-id').value.toString();
+    let newData = [];
+
+    axios
+        .get(`/chat/rooms/${roomId}`)
+        .then(response => {
+            $.each(response.data, function (index, value) {
+                newData.push({
+                    message: value.message,
+                    user_id: value.user_id,
+                    publisher_full_name: value.publisher_full_name,
+                    created_at: value.created_at,
+                    own: parseInt(userId) === parseInt(value.user_id),
+                })
+            });
+        });
+
+    messagesList.items = newData;
 
 }
 
-function initMessageListActions() {
-    let messageListDOM = document.getElementById('messages-list');
-    if (window.addEventListener) {
-        messageListDOM.addEventListener('DOMSubtreeModified', MessageListContentOnChange, false);
-    } else if (window.attachEvent) {
-        messageListDOM.attachEvent('DOMSubtreeModified', MessageListContentOnChange);
-    }
-
+$('#messages-list').bind("DOMSubtreeModified", function () {
     try {
         document.getElementById("messages-list").lastChild.scrollIntoView();
     }
     catch (e) {
     }
-
-}
-
-function MessageListContentOnChange() {
-    document.getElementById("messages-list").lastChild.scrollIntoView();
-}
-
-function initChatSocketActions(roomName) {
-
-    let chatSocket = new WebSocket('ws://' + window.location.host + '/ws/chat/' + roomName + '/');
-    let userId = document.getElementById('user-id').value.toString();
-
-    chatSocket.onmessage = function (e) {
-        let data = JSON.parse(e.data);
-
-        messagesList.items.push({
-            message: data['message'],
-            user_id: data['user_id'],
-            created_at: data['created_at'],
-            publisher_full_name: data['publisher_full_name'],
-            own: parseInt(userId) === parseInt(data['user_id']),
-        });
-    };
-
-    chatSocket.onclose = function (e) {
-        console.error('Chat socket closed unexpectedly');
-    };
-
-    document.querySelector('#chat-message-submit').onclick = function (e) {
-        let messageInputDom = document.querySelector('#message-text');
-        let message = messageInputDom.value;
-        if (message) {
-            initMessageListActions();
-            chatSocket.send(JSON.stringify({
-                'message': message,
-            }));
-            messageInputDom.value = '';
-        }
-    };
-
-}
-
-
-let messagesList = new Vue({
-    el: '#messages-list',
-    data: {
-        items: [
-        ]
-    },
 });
-
-

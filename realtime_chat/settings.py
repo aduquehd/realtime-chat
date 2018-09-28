@@ -83,7 +83,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = '/chat'
+LOGIN_REDIRECT_URL = '/chat/rooms'
+LOGOUT_REDIRECT_URL = '/accounts/login'
 
 # Django channels
 ASGI_APPLICATION = "realtime_chat.routing.application"
