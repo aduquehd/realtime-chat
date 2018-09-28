@@ -6,6 +6,7 @@ from apps.chat.models import Chat, Rooms
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
+        """Connect to a channel"""
         self.user = self.scope['user']
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_{}'.format(self.room_name)
@@ -18,12 +19,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
     async def disconnect(self, close_code):
+        """Disconnect from a channel"""
         await self.channel_layer.group_discard(
             self.room_group_name,
             self.channel_name
         )
 
     async def receive(self, text_data):
+        """Reveice a chat message into a channel"""
         if self.user and not self.user.is_authenticated:
             return
 
@@ -55,6 +58,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
     async def chat_message(self, event):
+        """Send the chat message to the channnel"""
         if self.user and not self.user.is_authenticated:
             return
 
