@@ -178,3 +178,8 @@ fabric.properties
 
 # Editor-based Rest Client
 .idea/httpRequests
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
