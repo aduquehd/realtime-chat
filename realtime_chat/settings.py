@@ -71,7 +71,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'es-es'
+LANGUAGE_CODE = 'en-es'
 
 TIME_ZONE = 'America/Bogota'
 
@@ -92,9 +92,11 @@ ASGI_APPLICATION = "realtime_chat.routing.application"
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
-        },
+        'LOCATION': 'redis://realtimedb.uay4jn.clustercfg.use1.cache.amazonaws.com:6379/',
+
+        # 'CONFIG': {
+        #     "hosts": [('localhost', 6379)],
+        # },
     },
 }
 
