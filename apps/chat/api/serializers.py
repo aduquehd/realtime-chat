@@ -5,6 +5,7 @@ from ..models import Chat
 
 class ChatSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(format="%H:%M:%S %Y/%m/%d")
+    updated_at = serializers.DateTimeField(format="%H:%M:%S %Y/%m/%d")
     publisher_full_name = serializers.SerializerMethodField()
 
     def get_publisher_full_name(self, obj):
