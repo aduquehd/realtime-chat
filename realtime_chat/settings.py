@@ -92,11 +92,11 @@ ASGI_APPLICATION = "realtime_chat.routing.application"
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'LOCATION': 'redis://realtimedb.uay4jn.clustercfg.use1.cache.amazonaws.com:6379/',
+        # 'LOCATION': 'redis://realtimedb.uay4jn.clustercfg.use1.cache.amazonaws.com:6379/',
 
-        # 'CONFIG': {
-        #     "hosts": [('localhost', 6379)],
-        # },
+        'CONFIG': {
+            "hosts": [('localhost', 6379)],
+        },
     },
 }
 

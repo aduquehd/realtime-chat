@@ -16,6 +16,18 @@ APPL and show the result into the room for all users.
 
 ## Technical setup (It take about 5 minutes)
 
+
+### Redis setup
+
+1. We used docker to setup redis configuration.
+
+    The port `6379` for realtime-chat and the port `6378` for 
+    realtime-chat-bot projects
+
+1. `docker run -p 6379:6379 -d redis:2.8`
+
+1. `docker run -p 6378:6379 -d redis:2.8`
+
 #### Development environment
 
 1. Remember, This is for development environment. For production or any deployment setup,
@@ -70,4 +82,4 @@ url/port execution)
 to the login or rooms url. You can start having fun now ;)
 
 1. You can go to `localhost:8000/chat/rooms/1` to see the API response 
-with all chats of the room by the ID wrote in the URL
+with all chats of the room by the ID wrote in the URL.
