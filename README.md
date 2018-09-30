@@ -60,9 +60,9 @@ url/port execution)
         
 1. The command `populate_users` created some users to can interact with the realtime chat
 
-    - Login credentials:
+    - Login credentials (The password is the same for all users):
         - users: `['andresduque', 'nelsonmartinez', 'wendylugo]`
-        - passwords: `123456`
+        - password: `123456`
         
 1. You can execute the unit test to the API with the command `python manage.py test`        
         
