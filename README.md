@@ -45,15 +45,15 @@ url/port execution)
 
     - Second project URL: https://github.com/saduqz/realtime-chat-bot
     
-
-    ENGINE = "django.db.backends.postgresql"
-    NAME = "realtime_chat"
-    HOST = "localhost"
-    PORT = "5432"
-    USER = "myuser"
-    PASSWORD = "mypassword"
-    REALTIME_CHAT_BOT_URL = "localhost:8001"
-    
+    ```python
+        ENGINE = "django.db.backends.postgresql"
+        NAME = "realtime_chat"
+        HOST = "localhost"
+        PORT = "5432"
+        USER = "myuser"
+        PASSWORD = "mypassword"
+        REALTIME_CHAT_BOT_URL = "localhost:8001"
+    ```    
 
 1. Execute the commands:
      - `python manage.py makemigrations`
