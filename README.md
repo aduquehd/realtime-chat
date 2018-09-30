@@ -21,6 +21,8 @@ APPL and show the result into the room for all users.
 1. Remember, This is for development environment. For production or any deployment setup,
 this use environment variables.
 
+1. Clone the project and go to the directory using the terminal/console
+
 1. Install requirements with `pip install -r requirements.txt`
 
 1. You need to create a file allocated into `realtime_chat/database_info.py` 
