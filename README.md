@@ -62,5 +62,10 @@ url/port execution)
         - users: `['andresduque', 'nelsonmartinez', 'wendylugo]`
         - passwords: `123456`
         
+1. You can execute the unit test to the API with the command `python manage.py test`        
+        
 1. Go to `localhost:8000` or your project url execution and then, you will be redirected
 to the login or rooms url. You can start having fun now ;)
+
+1. You can go to `localhost:8000/chat/rooms/1` to see the API response 
+with all chats of the room by the ID wrote in the URL
