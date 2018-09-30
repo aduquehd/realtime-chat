@@ -1,1 +1,66 @@
-realtime-chat
+# Realtime chat
+
+
+## Description
+Real Time Chat project is built on Django, Django Rest Framework and Django Channels.
+
+
+The concept of the projects is the "Rooms", it has N number of rooms and the users can
+interact with each room. The users need to be logged to can use the chat and the room's 
+content is updated in real time using web sockets.
+
+Also, an user can execute a bot command, writing "/stock=APPL". It will execute a web socket
+call to another server dedicated to the bot process. The bot will get the data of 
+APPL and show the result into the room for all users.
+
+
+## Technical setup (It take about 5 minutes)
+
+#### Development environment
+
+1. Remember, This is for development environment. For production or any deployment setup,
+this use environment variables.
+
+1. Install requirements with `pip install -r requirements.txt`
+
+1. You need to create a file allocated into `realtime_chat/database_info.py` 
+(At the same level that `settings.py`)
+
+1. This file should contains the Database info and realtime chat bot URL (Second project
+url/port execution)
+
+    - Second project URL: https://github.com/saduqz/realtime-chat-bot
+    
+
+    ENGINE = "django.db.backends.postgresql"
+    NAME = "realtime_chat"
+    HOST = "localhost"
+    PORT = "5432"
+    USER = "myuser"
+    PASSWORD = "mypassword"
+    REALTIME_CHAT_BOT_URL = "localhost:8001"
+    
+
+1. Execute the commands:
+     - `python manage.py makemigrations`
+     - `python manage.py migrate`
+     - `python manage.py create_super_user`
+     - `python manage.py populate_rooms`
+     - `python manage.py populate_users`
+     
+1. You can login into `/sysadmin` to see the admin interface.
+
+    - The login credentials are:
+        - username: `superadmin`
+        - password: `123456`
+        
+    - Here you can create new users, rooms and see the chats
+        
+1. The command `populate_users` created some users to can interact with the realtime chat
+
+    - Login credentials:
+        - users: `['andresduque', 'nelsonmartinez', 'wendylugo]`
+        - passwords: `123456`
+        
+1. Go to `localhost:8000` or your project url execution and then, you will be redirected
+to the login or rooms url. You can start having fun now ;)

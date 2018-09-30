@@ -104,7 +104,7 @@ CHANNEL_LAYERS = {
 if os.environ.get("ENVIRONMENT_NAME") in ("PRODUCTION",):
     SECRET_KEY = os.environ["REALTIME_CHAT_SECRET_KEY"]
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-    REALTIME_CHAT_BOT = ""
+    REALTIME_CHAT_BOT = os.environ["REALTIME_CHAT_BOT_URL"]
 
     DEBUG = False
 
@@ -121,10 +121,10 @@ if os.environ.get("ENVIRONMENT_NAME") in ("PRODUCTION",):
         }
     }
 else:
-    from .database_info import NAME, HOST, PORT, USER, PASSWORD, ENGINE
+    from .database_info import NAME, HOST, PORT, USER, PASSWORD, ENGINE, REALTIME_CHAT_BOT_URL
 
     SECRET_KEY = 'o353m1235nje=65!+rhz-asdf1241f5&&&ns@_rye(i(5sin9yo$2346234x=sf9ate@k'
-    REALTIME_CHAT_BOT = "localhost:8001"
+    REALTIME_CHAT_BOT = REALTIME_CHAT_BOT_URL
 
     DEBUG = True
 
