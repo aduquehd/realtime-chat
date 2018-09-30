@@ -2,8 +2,6 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = 'wm$u3)1v!p*-nutpjpn+&%f94r$i3&*dm)jyuba4v379yqlgi('
-
 DEBUG = True
 
 ALLOWED_HOSTS = []
