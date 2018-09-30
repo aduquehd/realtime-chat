@@ -15,7 +15,10 @@ Also, an user can execute a bot command, writing "/stock=APPL". It will execute 
 call to another server dedicated to the bot process. The bot will get the data of 
 APPL and show the result into the room for all users.
 
-The project has unit test that coverage the Rest API to get a room messages: 
+The application is using some good code practices, like documentation, query optimization
+(select and prefetch related to improve foreign keys), structure of directories and files.
+
+The project has unit test that coverage the Rest API to get a room's messages: 
 `python manage.py test`
 
 
