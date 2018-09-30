@@ -2,8 +2,10 @@
 
 
 ## Description
-Real Time Chat project is built on Django, Django Rest Framework and Django Channels.
+Real Time Chat project is built on Django, Django Rest Framework, Vue.js and Django Channels.
 
+Vue.js is used to consume the API to show the initial room chats, and also when a new message
+come from the web socket, it use the power of Vue.js to update the DOM elements. 
 
 The concept of the projects is the "Rooms", it has N number of rooms and the users can
 interact with each room. The users need to be logged to can use the chat and the room's 
@@ -12,6 +14,9 @@ content is updated in real time using web sockets.
 Also, an user can execute a bot command, writing "/stock=APPL". It will execute a web socket
 call to another server dedicated to the bot process. The bot will get the data of 
 APPL and show the result into the room for all users.
+
+The project has unit test that coverage the Rest API to get a room messages: 
+`python manage.py test`
 
 
 ## Technical setup (It take about 5 minutes)
